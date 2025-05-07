@@ -5,6 +5,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Game.GameMain;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -17,6 +20,7 @@ public class MenuPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// Buttons
 	private JButton newGame;
 	private JButton continueGame;
 	private JButton exit;
@@ -68,14 +72,20 @@ public class MenuPanel extends JPanel {
 		
 	}
 	
-	//named inner class
+	// Button logic
 		private class ButtonListener implements java.awt.event.ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String buttonLabel = e.getActionCommand();
+				String buttonLabel = e.getActionCommand(); //Get the button label
 				
 				switch (buttonLabel) {
 				case "New Game": 
+					// Close the menu window before opening the game window
+					java.awt.Window w1 = javax.swing.SwingUtilities.getWindowAncestor(MenuPanel.this);
+					if (w1 != null) w1.dispose();
+					
+					// Open the game window
+					GameMain.main(new String[0]);
 					
 					break;
 					
@@ -84,8 +94,9 @@ public class MenuPanel extends JPanel {
 					
 				case "Exit Game":
 					// Find the window that holds this panel and let swing handle the shut down 
-					java.awt.Window w = javax.swing.SwingUtilities.getWindowAncestor(MenuPanel.this);
-					if (w != null) w.dispose();
+					java.awt.Window w3 = javax.swing.SwingUtilities.getWindowAncestor(MenuPanel.this);
+					if (w3 != null) w3.dispose();
+					
 					break;
 				}
 			}
@@ -98,7 +109,7 @@ public class MenuPanel extends JPanel {
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
 			
-			setBackground(BG);
+			setBackground(BG); //Sets the main menu background color
 			
 		}
 	

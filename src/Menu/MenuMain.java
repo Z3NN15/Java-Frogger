@@ -5,9 +5,9 @@ import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 
 
-public class Main {
-	private static int WINDOW_HEIGHT = 800;
-	private static int WINDOW_WIDTH = 800;
+public class MenuMain {
+	private static final int WINDOW_HEIGHT = 400;
+	private static final int WINDOW_WIDTH = 400;
 	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> createGUI());
