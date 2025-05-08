@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.sound.sampled.Clip;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 
-public class Car {
+public class Car extends JComponent {
 	private JFrame frame;
 	private int x;
 	private int y;
