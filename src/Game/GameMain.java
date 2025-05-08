@@ -1,7 +1,6 @@
 package Game;
 
 import javax.swing.JFrame;
-
 import jdk.javadoc.internal.tool.Main;
 
 public class GameMain {
