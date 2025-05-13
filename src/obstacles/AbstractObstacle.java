@@ -1,12 +1,15 @@
-package GameObjects;
+package obstacles;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+
+import game.GameComponent;
+import game.GameObject;
+
 import java.awt.Color;
 
-import Game.GameComponent;
-import Game.GameObject;
+import player.AbstractPlayer;
 
 public abstract class AbstractObstacle extends GameObject {
 

@@ -1,4 +1,4 @@
-package GameObjects;
+package obstacles;
 
 public class Cars {
 

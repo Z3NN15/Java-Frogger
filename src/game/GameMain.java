@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import javax.swing.JFrame;
 import jdk.javadoc.internal.tool.Main;

@@ -1,4 +1,4 @@
-package GameObjects;
+package obstacles;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

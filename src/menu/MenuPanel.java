@@ -1,4 +1,4 @@
-package Menu;
+package menu;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Box;
@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Game.GameMain;
+import game.GameMain;
 
 import java.awt.Component;
 import java.awt.Dimension;

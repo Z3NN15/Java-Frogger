@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -71,7 +71,6 @@ public abstract class GameObject {
 		return x1 || x2 || y1 || y2;
 	}
 	
-	public 
 	
 	
 	

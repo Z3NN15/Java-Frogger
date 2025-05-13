@@ -1,8 +1,9 @@
-package Game;
+package game;
 
 import java.awt.Graphics;
-import GameObjects.Log;
-import GameObjects.Car;
+
+import obstacles.Car;
+import obstacles.Log;
 
 public class ObstacleManager {
 	private List<GameObject> obstacles;

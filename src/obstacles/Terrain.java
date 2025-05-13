@@ -1,26 +1,27 @@
-package GameObjects;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+package obstacles;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Fly extends JComponent{
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+public class Terrain extends JComponent{
 	private JFrame frame;
 	private int x;
 	private int y;
 	private int WIDTH;
 	private int HEIGHT;
 	private int speed;
-	private BufferedImage fly;
+	private BufferedImage image;
+	private boolean terrianLoaded;
 	
-	public Fly() {
-		WIDTH=fly.getWidth();
-		HEIGHT=fly.getHeight();
+	public Terrain() {
+		
 	}
-	public void handleIsEaten() {
+	public boolean isHit() {
+		return terrianLoaded;
 		
 	}
 	@Override
