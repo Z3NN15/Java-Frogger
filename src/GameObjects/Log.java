@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 
 
-public class Log {
+public class Log extends JComponent{
 	private JPanel panel;
 	private int x;
 	private int y;

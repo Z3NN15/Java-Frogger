@@ -4,8 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-public class Frog {
+public class Frog extends JComponent{
 	private JFrame frame;
 	private BufferedImage image;
 	private int WIDTH;

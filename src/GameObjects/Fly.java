@@ -1,12 +1,13 @@
 package GameObjects;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Fly {
+public class Fly extends JComponent{
 	private JFrame frame;
 	private int x;
 	private int y;

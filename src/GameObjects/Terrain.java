@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class Terrain {
+public class Terrain extends JComponent{
 	private JFrame frame;
 	private int x;
 	private int y;
