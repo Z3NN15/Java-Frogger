@@ -21,7 +21,8 @@ public class Car extends JComponent {
 	private Clip crashSound;
 	
 	public Car(JFrame frame) {
-		
+		WIDTH=carSprite.getWidth();
+		HEIGHT=carSprite.getHeight();
 	}
 	
 	public boolean hitbox(int HEIGHT , int WIDTH ) {

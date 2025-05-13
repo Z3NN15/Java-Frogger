@@ -14,10 +14,11 @@ public class Fly extends JComponent{
 	private int WIDTH;
 	private int HEIGHT;
 	private int speed;
-	private BufferedImage image;
+	private BufferedImage fly;
 	
 	public Fly() {
-		
+		WIDTH=fly.getWidth();
+		HEIGHT=fly.getHeight();
 	}
 	public void handleIsEaten() {
 		

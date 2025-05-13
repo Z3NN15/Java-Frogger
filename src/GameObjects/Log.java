@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
+import java.awt.image.BufferedImage;
 
 
 public class Log extends JComponent{
@@ -14,9 +15,11 @@ public class Log extends JComponent{
 	private int HEIGHT;
 	private int speed;
 	private boolean offscreen;
+	private BufferedImage log;
 	
 	public Log() {
-		
+		WIDTH=log.getWidth();
+		HEIGHT=log.getHeight();
 	}
 	public boolean hitbox() {
 		return offscreen;
