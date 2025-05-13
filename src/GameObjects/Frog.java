@@ -2,17 +2,26 @@ package GameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+=======
+>>>>>>> branch 'main' of git@github.com:Z3NN15/Java-Frogger.git
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+<<<<<<< HEAD
 public class Frog extends JComponent{
+=======
+import Game.GameObject;
+
+public class Frog extends GameObject {
+>>>>>>> branch 'main' of git@github.com:Z3NN15/Java-Frogger.git
 	private JFrame frame;
 	private BufferedImage frog;
 	private int WIDTH;
@@ -22,9 +31,15 @@ public class Frog extends JComponent{
 	private boolean deathFlag;
 	
 	public Frog(JFrame frame) {
+<<<<<<< HEAD
 		WIDTH=frog.getWidth();
 		HEIGHT=frog.getHeight();
 		}
+=======
+		
+	}
+	
+>>>>>>> branch 'main' of git@github.com:Z3NN15/Java-Frogger.git
 	public boolean hitbox(int HEGHT,int WIDTH) {
 		return deathFlag;
 		
@@ -60,6 +75,7 @@ public class Frog extends JComponent{
 	public void moveDelta() {
 		
 	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
