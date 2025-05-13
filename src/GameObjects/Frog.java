@@ -2,10 +2,11 @@ package GameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
-public class Frog {
+import Game.GameObject;
+
+public class Frog extends GameObject {
 	private JFrame frame;
 	private BufferedImage image;
 	private int WIDTH;
@@ -17,6 +18,7 @@ public class Frog {
 	public Frog(JFrame frame) {
 		
 	}
+	
 	public boolean hitbox(int HEGHT,int WIDTH) {
 		return deathFlag;
 		
@@ -31,6 +33,7 @@ public class Frog {
 	public void moveDelta() {
 		
 	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
