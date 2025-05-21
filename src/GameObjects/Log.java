@@ -3,8 +3,10 @@ package GameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 public class Log extends JComponent{
@@ -20,6 +22,8 @@ public class Log extends JComponent{
 	public Log() {
 		WIDTH=log.getWidth();
 		HEIGHT=log.getHeight();
+		log=ImageIO.read(new File("src/Images/log.png"));
+
 	}
 	public boolean hitbox() {
 		return offscreen;

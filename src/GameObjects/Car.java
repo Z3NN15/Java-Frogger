@@ -3,11 +3,13 @@ package GameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Car extends JComponent {
 	private JFrame frame;
@@ -23,6 +25,8 @@ public class Car extends JComponent {
 	public Car(JFrame frame) {
 		WIDTH=carSprite.getWidth();
 		HEIGHT=carSprite.getHeight();
+		carSprite=ImageIO.read(new File("src/Images/Car.png"));
+
 	}
 	
 	public boolean hitbox(int HEIGHT , int WIDTH ) {

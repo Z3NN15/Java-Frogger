@@ -1,5 +1,5 @@
 package GameObjects;
 
-public class Cars {
+public class Cars extends AbstractObstacle {
 
 }

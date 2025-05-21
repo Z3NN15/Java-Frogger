@@ -1,5 +1,5 @@
 package GameObjects;
 
-public class Logs {
+public class Logs extends AbstractObstacle {
 
 }

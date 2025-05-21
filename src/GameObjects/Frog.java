@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -20,20 +21,27 @@ public abstract class Frog extends GameObject{
 	private int WIDTH;
 	private int HEIGHT;
 	private int speed;
+	private int x,y;
 	private Clip deathSound;
 	private boolean deathFlag;
 	
 	public Frog() {
 		WIDTH=frog.getWidth();
 		HEIGHT=frog.getHeight();
+		frog=ImageIO.read(new File("src/Images/frog.png"));
 		}
 	public boolean hitbox(int HEGHT,int WIDTH) {
 		return deathFlag;
 		
 	}
 	public boolean handleEat(Fly fly) {
-		return deathFlag;
+		if(fly.getX()==x) {
+			return true;
+		}else {
+			return false;
+		}
 	}
+	
 	public boolean handleDeath(boolean isHit) {
 		if(isHit) {
 			playSoundEffect();
