@@ -1,17 +1,22 @@
 package player;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import game.GameComponent;
 import game.GameObject;
-import obstacles.AbstractObstacle;
 
 public abstract class AbstractPlayer extends GameObject {
-
 	protected double dx, dy;
-	protected boolean deathFlag;
+	public boolean isHit = false;
 
 	public AbstractPlayer(GameComponent gc, double scaleFactor, double x, double y, double width, double height) {
 		super(gc, scaleFactor, x, y, width, height);
-
 	}
 
 	public void update(double dx, double dy) {
@@ -21,15 +26,38 @@ public abstract class AbstractPlayer extends GameObject {
 
 	}
 	
-	// Abstract methods for eating and removing flies
-	public abstract void removeFly();
-
-	public abstract void addFly();
+	@Override
+	public boolean isRemoved() {
+		//Do nothing
+		return false;
+	}
 	
+	@Override
+	protected void markToRemove() {
+		//Do nothing
+	}
+
 	// Abstract method for handling player/fly death
 	public abstract void handleDeath();
 
-	// Abstract method for collision with obstacles
-	public abstract void handleCollision(AbstractObstacle obstacle);
+	public void playSoundEffect(String filePath) {
+		// Play sound effect when the player dies
+		try {
+			AudioInputStream a = AudioSystem.getAudioInputStream(new File(filePath));
+			Clip clip = AudioSystem.getClip();
+			clip.open(a);
+			clip.start();
+
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Caught " + e.getMessage());
+		}
+
+	}
 
 }

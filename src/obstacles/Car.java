@@ -33,15 +33,13 @@ public class Car extends AbstractObstacle {
 	}
 
 	@Override
-	public boolean collideWithPlayer(AbstractPlayer frog) {
+	public void collideWithPlayer(AbstractPlayer frog) {
 		// Check if the frog is on the car
-		if (frog.getX() < x + WIDTH && frog.getX() + AbstractPlayer.getWidth() > x && 
+		if (frog.getX() < x + WIDTH && frog.getX() + frog.getWidth() > x && 
 			frog.getY() < y + HEIGHT && frog.getY() + frog.getHeight() > y) {
 			// Frog is hit by the car
-			frog.deathFlag = true;
-			return true;
+			frog.isHit = true;
 		}
-		return false;
 	}
 	
 }

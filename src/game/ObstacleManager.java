@@ -1,6 +1,6 @@
 package game;
 
-import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +44,23 @@ public class ObstacleManager {
 		
 		scheduleNextLog();
 		scheduleNextCar();
+		checkCollision();
 	}
 	
 	public static void updateAll() {
 		tick++;
 		
 		// Advance obstacles
-		for (AbstractObstacle o: obstacles) {
+		
+		obstacles.removeIf(o -> {
 			o.update();
-		}
+			
+			// For debugging purposes
+			if (o.isOffScreen()) {
+				System.out.println("Obstacle is off screen");
+			}
+			return o.isRemoved();
+		});
 		
 		if (tick >= nextLogTick) {
 			spawnLog();
@@ -65,20 +73,39 @@ public class ObstacleManager {
 		}
 	}
 	
+	/**
+	 * Draws all obstacles
+	 */
 	public static void drawAll(Graphics2D g) {
 		for (AbstractObstacle o: obstacles) {
 			o.drawOn(g);
 		}
 	}
 	
-	public void handleCollision(Frog frog) {
-		frog = gc.getFrog();
+	/**
+	 * Get the obstacle speed based on the level.
+	 */
+	private static double getSpeed(double baseSpeed) {
+		
+		//TODO: Change the switch once levels are implemented
+		return switch (gc.getLevel()) {
+			case 1 -> baseSpeed;
+			case 2 -> rnd.nextBoolean() ? baseSpeed : -baseSpeed;
+			case 3 -> rnd.nextBoolean() ? baseSpeed * 1.5 : -baseSpeed * 1.5;
+			default -> throw new IllegalArgumentException("Unexpected value: " + gc.getLevel());
+		};
+	}
+	
+	private void checkCollision() {
+		Frog frog = gc.getFrog();
+		
 		for (AbstractObstacle o: obstacles) {
-			if (o.collideWithPlayer(frog)) {
-				frog.handleCollision(o);
+			if (frog.isHit) {
+				o.collideWithPlayer(frog);
 			}
 		}
 	}
+	
 	
 	private static void scheduleNextLog() {
 		nextLogTick = tick + rnd.nextInt(MIN_LOG_DELAY, MAX_LOG_DELAY);
@@ -90,42 +117,25 @@ public class ObstacleManager {
 	
 	private static void spawnLog() {
 		double y = LOG_LANES[rnd.nextInt(LOG_LANES.length)]; // Randomly select a lane
-		double speed = 0;
+		double speed = getSpeed(LOG_SPEED);
 		
-		switch (gc.getLevel()) {
-			case 1:
-				speed = LOG_SPEED;
-				break;
-			case 2:
-				speed = rnd.nextBoolean() ? LOG_SPEED : -LOG_SPEED;
-				break;
-			case 3:
-				speed = rnd.nextBoolean() ? LOG_SPEED * 1.5 : -LOG_SPEED * 1.5;
-				break;
-		}
+		// Create a temp log to get its width
+		Log tempLog = new Log(gc, LOG_SCALE_FACTOR, 0, y, speed);
+		double x = (speed > 0) ? -tempLog.getWidth() : gc.getWidth();
 		
-		double x = (speed > 0) ? -Log.getWidth() : gc.getWidth();
+		//Add the log to the list of obstacles
 		obstacles.add(new Log(gc, LOG_SCALE_FACTOR, x, y, speed));
 	}
 	
 	private static void spawnCar() {
 		double y = CAR_LANES[rnd.nextInt(CAR_LANES.length)]; // Randomly select a lane
-		double speed = 0;
+		double speed = getSpeed(CAR_SPEED);
 		
-		switch (gc.getLevel()) {
-			case 1:
-				speed = CAR_SPEED;
-				break;
-			case 2:
-				speed = rnd.nextBoolean() ? CAR_SPEED : -CAR_SPEED;
-				break;
-			case 3:
-				speed = rnd.nextBoolean() ? CAR_SPEED * 1.5 : -CAR_SPEED * 1.5;
-				break;
-		}
+		// Create a temp car to get its width
+		Car tempCar = new Car(gc, CAR_SCALE_FACTOR, 0, y, speed);
+		double x = (speed > 0) ? -tempCar.getWidth() : gc.getWidth();
 		
-		double x = (speed > 0) ? -Car.getWidth() : gc.getWidth();
+		//Add the car to the list of obstacles
 		obstacles.add(new Car(gc, CAR_SCALE_FACTOR, x, y, speed));
 	}
-
 }

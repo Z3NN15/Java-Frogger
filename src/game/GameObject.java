@@ -8,10 +8,9 @@ import java.awt.geom.Rectangle2D;
 public abstract class GameObject {
 	protected double x, y;
 	protected double dx, dy;
-	protected static double WIDTH = 0;
-	protected static double HEIGHT = 0;
+	protected double WIDTH = 0;
+	protected double HEIGHT = 0;
 	protected double scaleFactor = 1.0;
-	private boolean removed;
 	protected final GameComponent gc;
 	
 	/**
@@ -28,12 +27,12 @@ public abstract class GameObject {
 		this.x = x;
 		this.y = y;
 		this.scaleFactor = scaleFactor;
-		WIDTH = width * scaleFactor;
-		HEIGHT = height * scaleFactor;
+		this.WIDTH = width * scaleFactor;
+		this.HEIGHT = height * scaleFactor;
 		this.gc = gc;
 	}
 
-	// draw them jawns on screen
+	// Abstract method to draw them jawns on screen
 	public abstract void drawOn(Graphics2D g2d);
 	
 	public double getScaleFactor() {
@@ -46,15 +45,9 @@ public abstract class GameObject {
 		HEIGHT *= scaleFactor;
 	}
 	
-	public abstract void onRemove();
+	protected abstract boolean isRemoved();
 	
-	public boolean isRemoved() {
-		return removed;
-	}
-	
-	public void markRemoved() {
-		removed = true;
-	}
+	protected abstract void markToRemove();
 	
 	// A bunch of getters
 	public double getX() {
@@ -65,12 +58,12 @@ public abstract class GameObject {
 		return y;
 	}
 	
-	public static double getWidth() {
-		return WIDTH;
+	public double getWidth() {
+		return this.WIDTH;
 	}
 	
 	public double getHeight() {
-		return HEIGHT;
+		return this.HEIGHT;
 	}
 	
 	public Rectangle2D.Double getHitBox() {
@@ -83,7 +76,7 @@ public abstract class GameObject {
 	
 	
 	public boolean isOffScreen() {
-		boolean x1 = x < 0;
+		boolean x1 = x + getWidth() < 0;
 		boolean x2 = x > gc.getWidth();
 		boolean y1 = y < 0;
 		boolean y2 = y > gc.getHeight();

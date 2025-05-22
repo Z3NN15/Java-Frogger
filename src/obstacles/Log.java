@@ -33,15 +33,13 @@ public class Log extends AbstractObstacle{
 	}
 	
 	@Override
-	public boolean collideWithPlayer(AbstractPlayer frog) {
+	public void collideWithPlayer(AbstractPlayer frog) {
 		// Check if the frog is on the log
-		if (frog.getX() < x + WIDTH && frog.getX() + AbstractPlayer.getWidth() > x && 
+		if (frog.getX() < x + WIDTH && frog.getX() + frog.getWidth() > x && 
 			frog.getY() < y + HEIGHT && frog.getY() + frog.getHeight() > y) {
 			// Move the frog with the log
 			frog.update(speed, 0);
-			return true;
 		}
-		return false;
 	}
 
 	@Override

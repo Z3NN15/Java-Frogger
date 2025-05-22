@@ -11,10 +11,11 @@ public abstract class AbstractObstacle extends GameObject {
 
 	protected double speed;
 	protected boolean offScreen;
+	private boolean removed;
 	
 	/**
+	 * Constructor for the AbstractObstacle class
 	 * 
-	 * @param image
 	 * @param x
 	 * @param y
 	 * @param width
@@ -35,17 +36,22 @@ public abstract class AbstractObstacle extends GameObject {
 	public void update() {
 		x += speed;
 		if (isOffScreen()) {
-			markRemoved();
+			markToRemove();
 		}
 	}//update
 	
 	@Override
-	public void onRemove() {
-		//Do nothing
-	}
+	public boolean isRemoved() {
+		return removed;
+	}//isRemoved
+	
+	@Override
+	protected void markToRemove() {
+		removed = true;
+	}//markToRemove
 	
 	// handle the collision with the player
-	public abstract boolean collideWithPlayer(AbstractPlayer frog);
+	public abstract void collideWithPlayer(AbstractPlayer frog);
 	
 	
 }
