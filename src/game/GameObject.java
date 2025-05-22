@@ -22,11 +22,9 @@ public abstract class GameObject {
 	 * @param width
 	 * @param height
 	 */
-	public GameObject(GameComponent gc, double x, double y, double width, double height, double dy, double dx) {
+	public GameObject(GameComponent gc, double x, double y, double width, double height) {
 		this.x = x;
 		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
 		this.width = width;
 		this.height = height;
 		this.gc = gc;
@@ -35,13 +33,7 @@ public abstract class GameObject {
 	// draw them jawns on screen
 	public abstract void drawOn(Graphics2D g2d);
 	
-	
 	public abstract void onRemove();
-	
-	public void update() {
-		x += this.dx;
-		y += this.dy;
-	}
 	
 	public boolean isRemoved() {
 		return removed;

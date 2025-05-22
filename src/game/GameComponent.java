@@ -2,31 +2,56 @@ package game;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.Timer;
+import player.Frog;
+import obstacles.AbstractObstacle;
 
 public class GameComponent extends JComponent {
-	//
-	private int numTicks;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final int FPS = 60;
 	
-	// 2 types of objects
-//	private List<AbstractObstacle> obstacles = new ArrayList<>();
-//	private List<AbstractFly> flies = new ArrayList<>();
-//	
-//	private Frog frog;
+	// Player
+	private final Frog frog;
 	
+	// All the obstacle jawns go in here
+	private List<AbstractObstacle> obstacles = new ArrayList<>();
+	
+	// All the flies go in here
+//	private List<AbstractFly> flies = new ArrayList<>();	
+
+	private final Timer timer;
 	
 	public GameComponent() {
-//		this.frog = new Frog();
-//		
-//		this.obstacles.add(new log());
+		frog = new Frog(this, 0.25, 400, 400);
 		
+		//TODO: Add obstacles here
+		
+		InputHandler inputHandler = new InputHandler(this, frog, 50, 50);
+		
+		timer = new Timer(1000 / FPS, e -> {
+			this.drawScreen();
+		});
+		
+		timer.start();
 		
 	}
 	
 	public void drawScreen() {
 		this.repaint();
-//		System.out.println("Tick" + this.numTicks);
-//		System.out.println("There are " + this.obstacles.size() + " obstacles.");
+		this.updateState();
+	}
+	
+	@Override
+	public void addNotify() {
+		super.addNotify();
+		this.requestFocusInWindow();
 	}
 	
 
@@ -35,15 +60,27 @@ public class GameComponent extends JComponent {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-//		for (AbstractObstacle : this.obstacles) {
-//			obstacle.drawOn(g2);
-//		}
+		// Draw the player
+		frog.drawOn(g2d);
+		
+		//TODO:Draw the obstacles
+		
 	}
 
+	/**
+	 * Advance the game state by one tick:
+	 * - Move everything
+	 * - Check for collisions
+	 * - Remove off-screen objects
+	 */
 	public void updateState() {
-		// Each is big enough to be in a helper method.
-
-//		handleCollisions();
+		obstacles.forEach(AbstractObstacle::update);
+		
+		for (AbstractObstacle obstacle : obstacles) {
+			if (frog.overlaps(obstacle)) {
+				obstacle.collideWithPlayer(frog);
+			}
+		}
 	}
 	
 	

@@ -18,20 +18,28 @@ import obstacles.Car;
 import obstacles.Terrain;
 import player.Fly;
 
-public abstract class Frog extends AbstractPlayer {
+/**
+ * 
+ * @author Ayden Snedigar
+ *	TODO: Add logic to make sure frog can't go off screen
+ */
+
+public class Frog extends AbstractPlayer {
 
 	// Save spawn point for respawn on death
-	private final int startX, startY;
+	private final double startX, startY;
 
 	private static final BufferedImage FROG_IMAGE;
 
 	static {
 		try {
-			FROG_IMAGE = ImageIO.read(new File("src/Images/frog.png"));
+			FROG_IMAGE = ImageIO.read(new File("src/Images/frog-2.png"));
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to load frog image", e);
 		}
 	}
+	
+	private double scaleFactor = 1.0;
 
 	/**
 	 * 
@@ -42,16 +50,17 @@ public abstract class Frog extends AbstractPlayer {
 	 * @param height
 	 * @param speed
 	 */
-	public Frog(GameComponent gc, int x, int y, int speed) {
-		super(gc, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight(), speed);
+	public Frog(GameComponent gc, double scaleFactor, double x, double y) {
+		super(gc, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight());
 		this.startX = x;
 		this.startY = y;
 		this.deathFlag = false;
+		this.scaleFactor = scaleFactor;
 	}
 
 	@Override
 	public void drawOn(Graphics2D g2d) {
-		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) WIDTH, (int) HEIGHT, null);
+		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) (FROG_IMAGE.getWidth() * scaleFactor), (int) (FROG_IMAGE.getHeight() * scaleFactor), null);
 	}
 
 	@Override
@@ -84,8 +93,8 @@ public abstract class Frog extends AbstractPlayer {
 
 	}
 
-	// Play sound effect when the player dies
 	private void playSoundEffect() {
+		// Play sound effect when the player dies
 		try {
 			AudioInputStream a = AudioSystem.getAudioInputStream(new File("src/Audio/alarm_clock.wav"));
 			Clip clip = AudioSystem.getClip();
@@ -116,5 +125,11 @@ public abstract class Frog extends AbstractPlayer {
 		}
 		return false;
 	}// handleDeath
+
+	@Override
+	public void onRemove() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

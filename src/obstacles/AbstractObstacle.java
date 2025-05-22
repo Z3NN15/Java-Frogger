@@ -1,9 +1,5 @@
 package obstacles;
 
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import game.GameComponent;
 import game.GameObject;
 import player.AbstractPlayer;
@@ -26,7 +22,7 @@ public abstract class AbstractObstacle extends GameObject {
 	 * @param speed
 	 */
 	public AbstractObstacle(GameComponent gc, double x, double y, double width, double height, double speed) {
-		super(gc, x, y, width, height, speed, speed);
+		super(gc, x, y, width, height);
 		this.x = x;
 		this.y = y;
 		this.WIDTH = width;
@@ -35,15 +31,12 @@ public abstract class AbstractObstacle extends GameObject {
 		
 	}//constructor
 	
-	
 	public double getSpeed() {
 		// Return the speed of the obstacle
 		return speed;
 	}//getSpeed
 	
-	@Override
 	public void update() {
-		super.update();
 		x += speed;
 		if (isOffScreen()) {
 			markRemoved();
