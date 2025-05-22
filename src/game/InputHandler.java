@@ -20,9 +20,9 @@ public class InputHandler {
 	 * @param component
 	 * @param frog
 	 */
-	public InputHandler(JComponent component, Frog frog, double dx, double dy) {
-		this.component = component;
-		this.frog = frog;
+	public InputHandler(GameComponent gc, double dx, double dy) {
+		this.component = gc.getComponent();
+		this.frog = gc.getFrog();
 		this.stepX = dx;
 		this.stepY = dy;
 

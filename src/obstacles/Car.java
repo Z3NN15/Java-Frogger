@@ -21,8 +21,9 @@ public class Car extends AbstractObstacle {
 		}
 	}
 	
-	public Car(GameComponent gc, double x, double y, double width, double height, double speed) {
-		super(gc, x, y, width, height, speed);
+	public Car(GameComponent gc, double scaleFactor, double x, double y, double speed) {
+		super(gc, scaleFactor, x, y, CAR_IMAGE.getWidth(), CAR_IMAGE.getHeight(), speed);
+		
 	}
 
 	@Override
@@ -32,9 +33,15 @@ public class Car extends AbstractObstacle {
 	}
 
 	@Override
-	public void collideWithPlayer(AbstractPlayer frog) {
-		// TODO Auto-generated method stub
-		frog.handleCollision(this);
+	public boolean collideWithPlayer(AbstractPlayer frog) {
+		// Check if the frog is on the car
+		if (frog.getX() < x + WIDTH && frog.getX() + AbstractPlayer.getWidth() > x && 
+			frog.getY() < y + HEIGHT && frog.getY() + frog.getHeight() > y) {
+			// Frog is hit by the car
+			frog.deathFlag = true;
+			return true;
+		}
+		return false;
 	}
 	
 }

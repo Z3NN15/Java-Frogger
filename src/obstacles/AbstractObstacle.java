@@ -9,7 +9,7 @@ import player.AbstractPlayer;
  */
 public abstract class AbstractObstacle extends GameObject {
 
-	protected double x, y, WIDTH, HEIGHT, speed;
+	protected double speed;
 	protected boolean offScreen;
 	
 	/**
@@ -21,12 +21,8 @@ public abstract class AbstractObstacle extends GameObject {
 	 * @param height
 	 * @param speed
 	 */
-	public AbstractObstacle(GameComponent gc, double x, double y, double width, double height, double speed) {
-		super(gc, x, y, width, height);
-		this.x = x;
-		this.y = y;
-		this.WIDTH = width;
-		this.HEIGHT = height;
+	public AbstractObstacle(GameComponent gc, double scaleFactor, double x, double y, double width, double height, double speed) {
+		super(gc, scaleFactor, x, y, width, height);
 		this.speed = speed;
 		
 	}//constructor
@@ -49,7 +45,7 @@ public abstract class AbstractObstacle extends GameObject {
 	}
 	
 	// handle the collision with the player
-	public abstract void collideWithPlayer(AbstractPlayer frog);
+	public abstract boolean collideWithPlayer(AbstractPlayer frog);
 	
 	
 }

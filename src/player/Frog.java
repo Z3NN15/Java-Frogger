@@ -39,19 +39,16 @@ public class Frog extends AbstractPlayer {
 		}
 	}
 	
-	private double scaleFactor = 1.0;
 
 	/**
 	 * 
-	 * @param gc
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param speed
+	 * @param gc The game component you want the frog to be drawn on
+	 * @param scaleFactor modifier for the size of the image
+	 * @param x The starting x position of the frog
+	 * @param y The starting y position of the frog
 	 */
 	public Frog(GameComponent gc, double scaleFactor, double x, double y) {
-		super(gc, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight());
+		super(gc, scaleFactor, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight());
 		this.startX = x;
 		this.startY = y;
 		this.deathFlag = false;
@@ -60,7 +57,7 @@ public class Frog extends AbstractPlayer {
 
 	@Override
 	public void drawOn(Graphics2D g2d) {
-		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) (FROG_IMAGE.getWidth() * scaleFactor), (int) (FROG_IMAGE.getHeight() * scaleFactor), null);
+		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) WIDTH, (int) HEIGHT, null);
 	}
 
 	@Override
@@ -78,16 +75,16 @@ public class Frog extends AbstractPlayer {
 	}
 
 	@Override
-	public void handleCollision(AbstractObstacle obstacle) {
+	public void handleCollision(AbstractObstacle o) {
 
-		if (obstacle instanceof Log) {
-			this.x += obstacle.getSpeed();
-			if (this.x < obstacle.getX() || this.x + this.WIDTH > obstacle.getX() + obstacle.getWidth()) {
+		if (o instanceof Log) {
+			this.x += o.getSpeed();
+			if (this.x < o.getX() || this.x + WIDTH > o.getX() + AbstractObstacle.getWidth()) {
 				this.deathFlag = true;
 			}
-		} else if (obstacle instanceof Car) {
+		} else if (o instanceof Car) {
 			this.deathFlag = handleDeath(true);
-		} else if (obstacle instanceof Terrain) {
+		} else if (o instanceof Terrain) {
 			this.deathFlag = handleDeath(true);
 		}
 
@@ -121,6 +118,8 @@ public class Frog extends AbstractPlayer {
 	public boolean handleDeath(boolean isHit) {
 		if (isHit) {
 			playSoundEffect();
+			this.x = startX;
+			this.y = startY;
 			return true;
 		}
 		return false;

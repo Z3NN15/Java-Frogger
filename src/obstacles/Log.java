@@ -16,17 +16,15 @@ public class Log extends AbstractObstacle{
 	
 	static {
 		try {
-			LOG_IMAGE = ImageIO.read(new File("src/Images/log.png"));
+			LOG_IMAGE = ImageIO.read(new File("src/Images/8-bit log.png"));
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to load log image", e);
 		}
 	}
 	
-	public Log(GameComponent gc, double x, double y, double speed) {
-		super(gc, x, y, LOG_IMAGE.getWidth(), LOG_IMAGE.getHeight(), speed);
+	public Log(GameComponent gc, double scaleFactor, double x, double y, double speed) {
+		super(gc, scaleFactor, x, y, LOG_IMAGE.getWidth(), LOG_IMAGE.getHeight(), speed);
 		
-		this.WIDTH = LOG_IMAGE.getWidth();
-		this.HEIGHT = LOG_IMAGE.getHeight();
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -35,8 +33,15 @@ public class Log extends AbstractObstacle{
 	}
 	
 	@Override
-	public void collideWithPlayer(AbstractPlayer frog) {
-		frog.handleCollision(this);
+	public boolean collideWithPlayer(AbstractPlayer frog) {
+		// Check if the frog is on the log
+		if (frog.getX() < x + WIDTH && frog.getX() + AbstractPlayer.getWidth() > x && 
+			frog.getY() < y + HEIGHT && frog.getY() + frog.getHeight() > y) {
+			// Move the frog with the log
+			frog.update(speed, 0);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

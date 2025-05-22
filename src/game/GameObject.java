@@ -8,7 +8,9 @@ import java.awt.geom.Rectangle2D;
 public abstract class GameObject {
 	protected double x, y;
 	protected double dx, dy;
-	protected final double width, height;
+	protected static double WIDTH = 0;
+	protected static double HEIGHT = 0;
+	protected double scaleFactor = 1.0;
 	private boolean removed;
 	protected final GameComponent gc;
 	
@@ -22,16 +24,27 @@ public abstract class GameObject {
 	 * @param width
 	 * @param height
 	 */
-	public GameObject(GameComponent gc, double x, double y, double width, double height) {
+	public GameObject(GameComponent gc, double scaleFactor, double x, double y, double width, double height) {
 		this.x = x;
 		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.scaleFactor = scaleFactor;
+		WIDTH = width * scaleFactor;
+		HEIGHT = height * scaleFactor;
 		this.gc = gc;
 	}
-	
+
 	// draw them jawns on screen
 	public abstract void drawOn(Graphics2D g2d);
+	
+	public double getScaleFactor() {
+		return scaleFactor;
+	}
+	
+	public void setScaleFactor(double scaleFactor) {
+		this.scaleFactor = scaleFactor;
+		WIDTH *= scaleFactor;
+		HEIGHT *= scaleFactor;
+	}
 	
 	public abstract void onRemove();
 	
@@ -52,12 +65,12 @@ public abstract class GameObject {
 		return y;
 	}
 	
-	public double getWidth() {
-		return width;
+	public static double getWidth() {
+		return WIDTH;
 	}
 	
 	public double getHeight() {
-		return height;
+		return HEIGHT;
 	}
 	
 	public Rectangle2D.Double getHitBox() {
