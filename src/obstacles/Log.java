@@ -1,40 +1,48 @@
+
 package obstacles;
 
-import java.awt.Graphics;
+
 import java.awt.Graphics2D;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
+import game.GameComponent;
+import player.AbstractPlayer;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.File;
 
 
-public class Log extends JComponent{
-	private JPanel panel;
-	private int x;
-	private int y;
-	private int WIDTH;
-	private int HEIGHT;
-	private int speed;
-	private boolean offscreen;
-	private BufferedImage log;
+public class Log extends AbstractObstacle{
+	private static final BufferedImage LOG_IMAGE;
 	
-	public Log() {
-		WIDTH=log.getWidth();
-		HEIGHT=log.getHeight();
+	static {
+		try {
+			LOG_IMAGE = ImageIO.read(new File("src/Images/log.png"));
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to load log image", e);
+		}
 	}
-	public boolean hitbox() {
-		return offscreen;
+	
+	public Log(GameComponent gc, double x, double y, double speed) {
+		super(gc, x, y, LOG_IMAGE.getWidth(), LOG_IMAGE.getHeight(), speed);
 		
-	}
-	public void move() {
+		this.WIDTH = LOG_IMAGE.getWidth();
+		this.HEIGHT = LOG_IMAGE.getHeight();
+		this.x = x;
+		this.y = y;
+		this.speed = speed;
 		
+		this.offScreen = false;
 	}
+	
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		
+	public void collideWithPlayer(AbstractPlayer frog) {
+		frog.handleCollision(this);
 	}
-	
+
+	@Override
+	public void drawOn(Graphics2D g2d) {
+		g2d.drawImage(LOG_IMAGE, (int) x, (int) y, null);
+	}
 	
 }
 

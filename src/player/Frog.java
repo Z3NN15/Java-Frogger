@@ -1,90 +1,120 @@
+
 package player;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 
-import game.GameObject;
+import game.GameComponent;
+import obstacles.AbstractObstacle;
+import obstacles.Log;
+import obstacles.Car;
+import obstacles.Terrain;
+import player.Fly;
 
 public abstract class Frog extends AbstractPlayer {
-	private BufferedImage frog;
-	private int WIDTH;
-	private int HEIGHT;
-	private int speed;
 
-	private Clip deathSound;
-	private Clip moveSound;
-	private boolean deathFlag;
+	// Save spawn point for respawn on death
+	private final int startX, startY;
 
-	public Frog() {
-		WIDTH = frog.getWidth();
-		HEIGHT = frog.getHeight();
-	}
+	private static final BufferedImage FROG_IMAGE;
 
-	public boolean hitbox(int HEGHT, int WIDTH) {
-		return deathFlag;
-
-	}
-
-	public boolean handleDeath(boolean isHit) {
-		if (isHit) {
-			deathSoundEffect();
-			return true;
-		}
-		return false;
-	}
-
-	private void moveSoundEffect() {
+	static {
 		try {
-			AudioInputStream a = AudioSystem.getAudioInputStream(new File("src/Audio/frog-croak.mp3"));
-			moveSound = AudioSystem.getClip();
-			moveSound.open(a);
-			moveSound.start();
-
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FROG_IMAGE = ImageIO.read(new File("src/Images/frog.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.err.println("Caught " + e.getMessage());
-		}
-
-	}
-	
-	public void deathSoundEffect() {
-		try {
-			AudioInputStream a = AudioSystem.getAudioInputStream(new File("src/Audio/womp-womp_ZSD1fGH.mp3"));
-			deathSound = AudioSystem.getClip();
-			deathSound.open(a);
-			deathSound.start();
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.err.println("Caught " + e.getMessage());
+			throw new RuntimeException("Failed to load frog image", e);
 		}
 	}
-	
-	public void moveDelta() {
 
+	/**
+	 * 
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param speed
+	 */
+	public Frog(GameComponent gc, int x, int y, int speed) {
+		super(gc, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight(), speed);
+		this.startX = x;
+		this.startY = y;
+		this.deathFlag = false;
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
+	public void drawOn(Graphics2D g2d) {
+		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) WIDTH, (int) HEIGHT, null);
+	}
+
+	@Override
+	public void addFly() {
+		// TODO implement this method
+//		this.flyCount++;
+	}
+
+	@Override
+	public void removeFly() {
+		// TODO implement this method
+//		if (this.flyCount > 0) {
+//			this.flyCount--;
+//		}
+	}
+
+	@Override
+	public void handleCollision(AbstractObstacle obstacle) {
+
+		if (obstacle instanceof Log) {
+			this.x += obstacle.getSpeed();
+			if (this.x < obstacle.getX() || this.x + this.WIDTH > obstacle.getX() + obstacle.getWidth()) {
+				this.deathFlag = true;
+			}
+		} else if (obstacle instanceof Car) {
+			this.deathFlag = handleDeath(true);
+		} else if (obstacle instanceof Terrain) {
+			this.deathFlag = handleDeath(true);
+		}
 
 	}
+
+	// Play sound effect when the player dies
+	private void playSoundEffect() {
+		try {
+			AudioInputStream a = AudioSystem.getAudioInputStream(new File("src/Audio/alarm_clock.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(a);
+			clip.start();
+
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Caught " + e.getMessage());
+		}
+
+	}// playSoundEffect
+
+	public boolean handleEat(Fly fly) {
+		// Changed to inherited x instead of local x
+		return fly.getX() == x;
+	}// handleEat
+
+	public boolean handleDeath(boolean isHit) {
+		if (isHit) {
+			playSoundEffect();
+			return true;
+		}
+		return false;
+	}// handleDeath
+
 }

@@ -1,38 +1,40 @@
 package obstacles;
 
-import java.awt.Graphics;
+
 import java.awt.Graphics2D;
-
-import javax.sound.sampled.Clip;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+import game.GameComponent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import player.AbstractPlayer;
 
-public class Car extends JComponent {
-	private JFrame frame;
-	private int x;
-	private int y;
-	private int WIDTH;
-	private int HEIGHT;
-	private int speed;
-	private boolean offscreen;
-	private BufferedImage carSprite;
-	private Clip crashSound;
+
+
+public class Car extends AbstractObstacle {
+	private static final BufferedImage CAR_IMAGE;
 	
-	public Car(JFrame frame) {
-		WIDTH=carSprite.getWidth();
-		HEIGHT=carSprite.getHeight();
+	static {
+		try {
+			CAR_IMAGE = ImageIO.read(new File("src/Images/car.png"));
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to load car image", e);
+		}
 	}
 	
-	public boolean hitbox(int HEIGHT , int WIDTH ) {
-		return offscreen;
-		
+	public Car(GameComponent gc, double x, double y, double width, double height, double speed) {
+		super(gc, x, y, width, height, speed);
 	}
+
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		
+	public void drawOn(Graphics2D g2d) {
+		// TODO Auto-generated method stub
+		g2d.drawImage(CAR_IMAGE, (int) x, (int) y, null);
 	}
+
+	@Override
+	public void collideWithPlayer(AbstractPlayer frog) {
+		// TODO Auto-generated method stub
+		frog.handleCollision(this);
+	}
+	
 }

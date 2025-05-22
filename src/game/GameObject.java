@@ -4,53 +4,68 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 
+
 public abstract class GameObject {
-	private double x, y;
-	private double dy;
-	private double dx; 
-	private double width;
-	private double height;
-	private boolean removeObstacle;
-	protected GameComponent gc;
+	protected double x, y;
+	protected double dx, dy;
+	protected final double width, height;
+	private boolean removed;
+	protected final GameComponent gc;
 	
-	public GameObject(GameComponent component, double x, double y, double dx, double dy, double width, double height) {
+	/**
+	 * 
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param dx
+	 * @param dy
+	 * @param width
+	 * @param height
+	 */
+	public GameObject(GameComponent gc, double x, double y, double width, double height, double dy, double dx) {
 		this.x = x;
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
-		this.gc = component;
+		this.width = width;
+		this.height = height;
+		this.gc = gc;
 	}
 	
-	public abstract void onRemove();
+	// draw them jawns on screen
 	public abstract void drawOn(Graphics2D g2d);
 	
+	
+	public abstract void onRemove();
+	
 	public void update() {
-		this.x += this.dx;
-		this.y += this.dy;
+		x += this.dx;
+		y += this.dy;
 	}
 	
-	public boolean removeObstacle() {
-		return this.removeObstacle;
+	public boolean isRemoved() {
+		return removed;
 	}
 	
-	public void markToRemove() {
-		this.removeObstacle = true;
+	public void markRemoved() {
+		removed = true;
 	}
 	
+	// A bunch of getters
 	public double getX() {
-		return this.x;
+		return x;
 	}
 	
 	public double getY() {
-		return this.y;
+		return y;
 	}
 	
 	public double getWidth() {
-		return this.width;
+		return width;
 	}
 	
 	public double getHeight() {
-		return this.height;
+		return height;
 	}
 	
 	public Rectangle2D.Double getHitBox() {
@@ -64,16 +79,11 @@ public abstract class GameObject {
 	
 	public boolean isOffScreen() {
 		boolean x1 = x < 0;
-		boolean x2 = x + GameMain.WINDOW_WIDTH > gc.getWidth();
+		boolean x2 = x > gc.getWidth();
 		boolean y1 = y < 0;
-		boolean y2 = y + GameMain.WINDOW_HEIGHT > gc.getHeight();
+		boolean y2 = y > gc.getHeight();
 		
 		return x1 || x2 || y1 || y2;
 	}
-	
-	
-	
-	
-	public abstract void collideWithPlayer(AbstractPlayer frog);
 
 }

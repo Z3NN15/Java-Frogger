@@ -22,6 +22,6 @@ public class GameAdvanceListener implements ActionListener {
 
 		// update screen
 		this.gc.updateState();
-		this.gc.drawOn();
+		this.gc.drawScreen();
 	}
 }
