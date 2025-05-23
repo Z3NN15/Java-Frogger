@@ -29,14 +29,14 @@ public class Log extends AbstractObstacle{
 	
 	@Override
 	public Rectangle2D.Double getHitBox() {
-		double paddingX = 0.1 * this.getWidth();
-		double paddingY = 0.1 * this.getHeight();
+		double paddingX = 0.1 * Assets.LOG.getWidth();
+		double paddingY = 0.1 * Assets.LOG.getHeight();
 		
 		return new Rectangle2D.Double(
 				x + paddingX,
 				y + paddingY,
-				this.getWidth() - 2 * paddingX,
-				this.getHeight() - 2 * paddingY
+				Assets.LOG.getWidth() - 2 * paddingX,
+				Assets.LOG.getHeight() - 2 * paddingY
 				);
 	}
 

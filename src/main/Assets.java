@@ -18,7 +18,7 @@ public class Assets {
 
 	public static void init() {
 		loadSounds();
-		loadImages();
+//		loadImages();
 
 		FROG = getScaledImage(SRC_FROG, frogScaleFactor);
 		LOG = getScaledImage(SRC_LOG, logScaleFactor);
@@ -28,9 +28,9 @@ public class Assets {
 
 	private static void loadImages() {
 		try {
-			SRC_FROG = ImageIO.read(Assets.class.getResourceAsStream("/resources/frog-2.png"));
-			SRC_LOG = ImageIO.read(Assets.class.getResourceAsStream("/resources/8-bit log.png"));
-			SRC_CAR = ImageIO.read(Assets.class.getResourceAsStream("/resources/8-bit car.png"));
+			SRC_FROG = ImageIO.read(Assets.class.getResourceAsStream("/images/frog-2.png"));
+			SRC_LOG = ImageIO.read(Assets.class.getResourceAsStream("/images/8-bit log.png"));
+			SRC_CAR = ImageIO.read(Assets.class.getResourceAsStream("/images/8-bit car.png"));
 
 			if (SRC_FROG == null || SRC_LOG == null || SRC_CAR == null) {
 				throw new IOException("One or more image assets could not be loaded. Check file paths.");
@@ -42,9 +42,9 @@ public class Assets {
 	}
 
 	private static void loadSounds() {
-		frogDeathSound = loadClip("/resources/womp-womp.mp3");
-		moveSound = loadClip("/resources/frog-croak.mp3");
-		gameOverSound = loadClip("/resources/kermit-is-never-gonna-give-you-up.mp3");
+		frogDeathSound = loadClip("/audio/womp-womp.mp3");
+		moveSound = loadClip("/audio/frog-croak.mp3");
+		gameOverSound = loadClip("/audio/kermit-is-never-gonna-give-you-up.mp3");
 	}
 
 	private static BufferedImage getScaledImage(BufferedImage src, double scaleFactor) {

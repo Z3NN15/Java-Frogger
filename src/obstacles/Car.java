@@ -21,14 +21,14 @@ public class Car extends AbstractObstacle {
 	
 	@Override
 	public Rectangle2D.Double getHitBox() {
-		double paddingX = 0.10 * this.getWidth();
-		double paddingY = 0.25 * this.getHeight();
+		double paddingX = 0.10 * Assets.CAR.getWidth();
+		double paddingY = 0.25 * Assets.CAR.getHeight();
 		
 		return new Rectangle2D.Double(
 				x + paddingX,
 				y + paddingY,
-				this.getWidth() - 2 * paddingX,
-				this.getHeight() - 2 * paddingY
+				Assets.CAR.getWidth() - 2 * paddingX,
+				Assets.CAR.getHeight() - 2 * paddingY
 				);
 	}
 	

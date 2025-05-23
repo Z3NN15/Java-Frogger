@@ -42,14 +42,14 @@ public class Frog extends AbstractPlayer {
 	
 	@Override
 	public Rectangle2D.Double getHitBox() {
-		double paddingX = 0.15 * this.getWidth();
-		double paddingY = 0.1 * this.getHeight();
+		double paddingX = 0.15 * Assets.FROG.getWidth();
+		double paddingY = 0.1 * Assets.FROG.getHeight();
 		
 		return new Rectangle2D.Double(
 				x + paddingX,
 				y + paddingY,
-				this.getWidth() - 2 * paddingX,
-				this.getHeight() - 2 * paddingY
+				Assets.FROG.getWidth() - 2 * paddingX,
+				Assets.FROG.getHeight() - 2 * paddingY
 				);
 	}// getHitBox
 

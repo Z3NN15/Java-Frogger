@@ -17,6 +17,7 @@ public class GameComponent extends JComponent {
 
 
     public GameComponent() {
+    	Assets.init();
         frog = new Frog(400, 400);
         obstacleManager = new ObstacleManager();
 
