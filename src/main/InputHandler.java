@@ -14,7 +14,7 @@ public class InputHandler implements KeyListener {
 	 * @param component
 	 * @param frog
 	 */
-	public InputHandler(Frog frog,double dx, double dy) {
+	public InputHandler(Frog frog, double dx, double dy) {
 		this.frog = frog;
 		this.stepX = dx;
 		this.stepY = dy;
@@ -25,13 +25,23 @@ public class InputHandler implements KeyListener {
 		int key = e.getKeyCode();
 		
 		switch (key) {
-		case KeyEvent.VK_UP -> frog.setMoveDelta(0, -stepY);
+		case KeyEvent.VK_UP:
+			frog.setMoveDelta(0, -stepY);
+//			System.out.println("UP");
+			break;
 
-		case KeyEvent.VK_DOWN -> frog.setMoveDelta(0, stepY);
-
-		case KeyEvent.VK_LEFT -> frog.setMoveDelta(-stepX, 0);
-
-		case KeyEvent.VK_RIGHT -> frog.setMoveDelta(stepX, 0);
+		case KeyEvent.VK_DOWN:
+			frog.setMoveDelta(0, stepY);
+//			System.out.println("DOWN");
+			break;
+		case KeyEvent.VK_LEFT:
+			frog.setMoveDelta(-stepX, 0);
+//			System.out.println("LEFT");
+			break;
+		case KeyEvent.VK_RIGHT:
+			frog.setMoveDelta(stepX, 0);
+//			System.out.println("RIGHT");
+			break;
 		}
 	}
 	

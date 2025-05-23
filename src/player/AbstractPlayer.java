@@ -15,7 +15,7 @@ public abstract class AbstractPlayer extends GameObject {
 
 	public void update() {
 		// Update the player's position based on dx and dy
-		System.out.println("Updating frog");
+//		System.out.println("Updating frog");
 		x += dx;
 		y += dy;
 

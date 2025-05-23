@@ -1,6 +1,7 @@
 
 package player;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import main.Assets;
@@ -27,6 +28,12 @@ public class Frog extends AbstractPlayer {
 		this.startX = x;
 		this.startY = y;
 
+	}
+	
+	@Override
+	public void drawOn(Graphics2D g2d) {
+		g2d.drawImage(Assets.FROG, (int) this.getX(), (int) this.getY(), null);
+		this.drawHitBox(g2d);
 	}
 
 	public boolean handleEat(Fly fly) {

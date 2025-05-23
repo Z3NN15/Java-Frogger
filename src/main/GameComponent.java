@@ -17,16 +17,16 @@ public class GameComponent extends JComponent {
 
 
     public GameComponent() {
-    	Assets.init();
         frog = new Frog(400, 400);
         obstacleManager = new ObstacleManager();
 
-        InputHandler inputHandler = new InputHandler(frog, 50, 50);
-        this.addKeyListener(inputHandler);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
+        setFocusable(true);
+        requestFocusInWindow();
+        addKeyListener(new InputHandler(frog, 10, 10));
 
-        timer = new Timer(1000 / FPS, this::actionPerformed);
+        timer = new Timer(1000 / FPS, e -> {
+        	actionPerformed(e);
+        });
         timer.start();
     }
 

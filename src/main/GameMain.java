@@ -12,21 +12,23 @@ public class GameMain {
 	
 	
 	public static void main(String[] args) {
+		// Initialize assets
+		Assets.init();
+		// Initialize the game
 		new GameMain();
-		
 	}
 	
 	public GameMain() {
 		JFrame frame = new JFrame("Frogger!");
 		
-		GameComponent gc = new GameComponent();
-		frame.add(gc);
+		GameComponent game = new GameComponent();
+		frame.add(game);
+		game.requestFocusInWindow();
 		
 		
 		frame.setSize(WINDOW_HEIGHT, WINDOW_WIDTH);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		frame.requestFocusInWindow();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

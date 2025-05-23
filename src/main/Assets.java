@@ -13,12 +13,14 @@ import javax.sound.sampled.Clip;
 public class Assets {
 	private static BufferedImage SRC_FROG, SRC_LOG, SRC_CAR;
 	public static BufferedImage FROG, LOG, CAR;
-	protected static double frogScaleFactor, logScaleFactor, carScaleFactor;
+	protected static double frogScaleFactor = 0.25,
+							 logScaleFactor = 0.15,
+							 carScaleFactor = 0.15;
 	public static Clip frogDeathSound, moveSound, gameOverSound;
 
 	public static void init() {
 		loadSounds();
-//		loadImages();
+		loadImages();
 
 		FROG = getScaledImage(SRC_FROG, frogScaleFactor);
 		LOG = getScaledImage(SRC_LOG, logScaleFactor);
@@ -42,12 +44,16 @@ public class Assets {
 	}
 
 	private static void loadSounds() {
-		frogDeathSound = loadClip("/audio/womp-womp.mp3");
-		moveSound = loadClip("/audio/frog-croak.mp3");
-		gameOverSound = loadClip("/audio/kermit-is-never-gonna-give-you-up.mp3");
+		frogDeathSound = loadClip("/audio/womp-womp.wav");
+		moveSound = loadClip("/audio/frog-croak.wav");
+		gameOverSound = loadClip("/audio/kermit-is-never-gonna-give-you-up.wav");
 	}
 
 	private static BufferedImage getScaledImage(BufferedImage src, double scaleFactor) {
+		if (src == null || scaleFactor <= 0) {
+			throw new IllegalArgumentException("Invalid source image or scale factor: " + scaleFactor);
+		}
+		
 		int w = (int) (src.getWidth() * scaleFactor);
 		int h = (int) (src.getHeight() * scaleFactor);
 
