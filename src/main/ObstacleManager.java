@@ -1,25 +1,23 @@
-package game;
+package main;
 
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import obstacles.AbstractObstacle;
 import obstacles.Car;
 import obstacles.Log;
 import player.Frog;
 
 public class ObstacleManager {
-	private static GameComponent gc;
 	private static List<AbstractObstacle> obstacles = new ArrayList<>();
 	private final static Random rnd = new Random();
 	private static long tick = 0;
 	
-	// Scale factors for the obstacles
-	private static final double LOG_SCALE_FACTOR = 0.25;
-	private static final double CAR_SCALE_FACTOR = 0.25;
+	private static int LOG_WIDTH = (int)(Assets.LOG.getWidth());
+	private static int CAR_WIDTH = (int)(Assets.CAR.getWidth());
+
 	
 	//Spawn ticks
 	private static long nextLogTick;
@@ -39,15 +37,13 @@ public class ObstacleManager {
 	private static final double LOG_SPEED = 2.0;
 	private static final double CAR_SPEED = 3.0;
 	
-	public ObstacleManager(GameComponent gc) {
-		ObstacleManager.gc = gc;
-		
+	public ObstacleManager() {
+
 		scheduleNextLog();
 		scheduleNextCar();
-		checkCollision();
 	}
 	
-	public static void updateAll() {
+	public static void updateAll(Frog frog) {
 		tick++;
 		
 		// Advance obstacles
@@ -56,10 +52,11 @@ public class ObstacleManager {
 			o.update();
 			
 			// For debugging purposes
-			if (o.isOffScreen()) {
-				System.out.println("Obstacle is off screen");
-			}
-			return o.isRemoved();
+//			if (o.isOffScreen()) {
+//				System.out.println("Obstacle is off screen");
+//			}
+			
+			return o.isOffScreen();
 		});
 		
 		if (tick >= nextLogTick) {
@@ -71,6 +68,8 @@ public class ObstacleManager {
 			spawnCar();
 			scheduleNextCar();
 		}
+		
+		checkCollision(frog);
 	}
 	
 	/**
@@ -88,21 +87,18 @@ public class ObstacleManager {
 	private static double getSpeed(double baseSpeed) {
 		
 		//TODO: Change the switch once levels are implemented
-		return switch (gc.getLevel()) {
+		return switch (1) {
 			case 1 -> baseSpeed;
 			case 2 -> rnd.nextBoolean() ? baseSpeed : -baseSpeed;
 			case 3 -> rnd.nextBoolean() ? baseSpeed * 1.5 : -baseSpeed * 1.5;
-			default -> throw new IllegalArgumentException("Unexpected value: " + gc.getLevel());
+			default -> throw new IllegalArgumentException("Unexpected value: " + 1);
 		};
 	}
 	
-	private void checkCollision() {
-		Frog frog = gc.getFrog();
+	private static void checkCollision(Frog frog) {
 		
 		for (AbstractObstacle o: obstacles) {
-			if (frog.isHit) {
-				o.collideWithPlayer(frog);
-			}
+			o.handleCollision(frog);
 		}
 	}
 	
@@ -116,26 +112,21 @@ public class ObstacleManager {
 	}
 	
 	private static void spawnLog() {
-		double y = LOG_LANES[rnd.nextInt(LOG_LANES.length)]; // Randomly select a lane
 		double speed = getSpeed(LOG_SPEED);
-		
-		// Create a temp log to get its width
-		Log tempLog = new Log(gc, LOG_SCALE_FACTOR, 0, y, speed);
-		double x = (speed > 0) ? -tempLog.getWidth() : gc.getWidth();
+		double y = LOG_LANES[rnd.nextInt(LOG_LANES.length)]; // Randomly select a lane
+		double x = (speed > 0) ? -LOG_WIDTH : GameMain.WINDOW_WIDTH;
 		
 		//Add the log to the list of obstacles
-		obstacles.add(new Log(gc, LOG_SCALE_FACTOR, x, y, speed));
+		obstacles.add(new Log(x, y, speed));
 	}
 	
 	private static void spawnCar() {
 		double y = CAR_LANES[rnd.nextInt(CAR_LANES.length)]; // Randomly select a lane
 		double speed = getSpeed(CAR_SPEED);
 		
-		// Create a temp car to get its width
-		Car tempCar = new Car(gc, CAR_SCALE_FACTOR, 0, y, speed);
-		double x = (speed > 0) ? -tempCar.getWidth() : gc.getWidth();
+		double x = (speed > 0) ? -CAR_WIDTH : GameMain.WINDOW_WIDTH;
 		
 		//Add the car to the list of obstacles
-		obstacles.add(new Car(gc, CAR_SCALE_FACTOR, x, y, speed));
+		obstacles.add(new Car(x, y, speed));
 	}
 }

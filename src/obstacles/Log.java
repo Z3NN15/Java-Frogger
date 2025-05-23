@@ -2,50 +2,43 @@
 package obstacles;
 
 
-import java.awt.Graphics2D;
-import game.GameComponent;
 import player.AbstractPlayer;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.File;
+
+import java.awt.geom.Rectangle2D;
+
+import main.Assets;
+
 
 
 public class Log extends AbstractObstacle{
-	private static final BufferedImage LOG_IMAGE;
-	
-	static {
-		try {
-			LOG_IMAGE = ImageIO.read(new File("src/Images/8-bit log.png"));
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to load log image", e);
-		}
-	}
-	
-	public Log(GameComponent gc, double scaleFactor, double x, double y, double speed) {
-		super(gc, scaleFactor, x, y, LOG_IMAGE.getWidth(), LOG_IMAGE.getHeight(), speed);
-		
-		this.x = x;
-		this.y = y;
-		this.speed = speed;
-		
-		this.offScreen = false;
+
+	public Log(double x, double y, double speed) {
+		super(Assets.LOG, x, y, speed);
 	}
 	
 	@Override
-	public void collideWithPlayer(AbstractPlayer frog) {
+	public void handleCollision(AbstractPlayer frog) {
 		// Check if the frog is on the log
-		if (frog.getX() < x + WIDTH && frog.getX() + frog.getWidth() > x && 
-			frog.getY() < y + HEIGHT && frog.getY() + frog.getHeight() > y) {
+		if (this.overlaps(frog)) {
 			// Move the frog with the log
-			frog.update(speed, 0);
+			frog.setMoveDelta(this.getSpeed(), 0);
+			frog.update();
+			
 		}
+	}
+	
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		double paddingX = 0.1 * this.getWidth();
+		double paddingY = 0.1 * this.getHeight();
+		
+		return new Rectangle2D.Double(
+				x + paddingX,
+				y + paddingY,
+				this.getWidth() - 2 * paddingX,
+				this.getHeight() - 2 * paddingY
+				);
 	}
 
-	@Override
-	public void drawOn(Graphics2D g2d) {
-		g2d.drawImage(LOG_IMAGE, (int) x, (int) y, null);
-	}
-	
 }
 

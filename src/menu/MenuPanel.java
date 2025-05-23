@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import game.GameMain;
+import main.GameMain;
 
 import java.awt.Component;
 import java.awt.Dimension;

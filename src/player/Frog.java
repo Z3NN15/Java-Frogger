@@ -1,12 +1,9 @@
 
 package player;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import game.GameComponent;
+import java.awt.geom.Rectangle2D;
+
+import main.Assets;
 
 /**
  * 
@@ -18,16 +15,6 @@ public class Frog extends AbstractPlayer {
 	// Save spawn point for respawn on death
 	private final double startX, startY;
 
-	private static final BufferedImage FROG_IMAGE;
-
-	static {
-		try {
-			FROG_IMAGE = ImageIO.read(new File("src/Images/frog-2.png"));
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to load frog image", e);
-		}
-	}
-
 	/**
 	 * 
 	 * @param gc          The game component you want the frog to be drawn on
@@ -35,20 +22,11 @@ public class Frog extends AbstractPlayer {
 	 * @param x           The starting x position of the frog
 	 * @param y           The starting y position of the frog
 	 */
-	public Frog(GameComponent gc, double scaleFactor, double x, double y) {
-		super(gc, scaleFactor, x, y, FROG_IMAGE.getWidth(), FROG_IMAGE.getHeight());
+	public Frog(double x, double y) {
+		super(Assets.FROG, x, y);
 		this.startX = x;
 		this.startY = y;
-		this.scaleFactor = scaleFactor;
 
-		if (isHit) {
-			handleDeath();
-		}
-	}
-
-	@Override
-	public void drawOn(Graphics2D g2d) {
-		g2d.drawImage(FROG_IMAGE, (int) x, (int) y, (int) WIDTH, (int) HEIGHT, null);
 	}
 
 	public boolean handleEat(Fly fly) {
@@ -57,9 +35,22 @@ public class Frog extends AbstractPlayer {
 	}// handleEat
 
 	public void handleDeath() {
-		playSoundEffect("src/Audio/alarm_clock.wav");
+		Assets.playSound(Assets.frogDeathSound);
 		this.x = startX;
 		this.y = startY;
 	}// handleDeath
+	
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		double paddingX = 0.15 * this.getWidth();
+		double paddingY = 0.1 * this.getHeight();
+		
+		return new Rectangle2D.Double(
+				x + paddingX,
+				y + paddingY,
+				this.getWidth() - 2 * paddingX,
+				this.getHeight() - 2 * paddingY
+				);
+	}// getHitBox
 
 }

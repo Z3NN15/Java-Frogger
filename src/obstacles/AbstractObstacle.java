@@ -1,17 +1,17 @@
 package obstacles;
 
-import game.GameComponent;
-import game.GameObject;
+import java.awt.image.BufferedImage;
+
+import main.GameObject;
 import player.AbstractPlayer;
 
 /**
  * 
  */
 public abstract class AbstractObstacle extends GameObject {
-
+	
+	
 	protected double speed;
-	protected boolean offScreen;
-	private boolean removed;
 	
 	/**
 	 * Constructor for the AbstractObstacle class
@@ -22,8 +22,8 @@ public abstract class AbstractObstacle extends GameObject {
 	 * @param height
 	 * @param speed
 	 */
-	public AbstractObstacle(GameComponent gc, double scaleFactor, double x, double y, double width, double height, double speed) {
-		super(gc, scaleFactor, x, y, width, height);
+	public AbstractObstacle(BufferedImage image, double x, double y, double speed) {
+		super(image, x, y);
 		this.speed = speed;
 		
 	}//constructor
@@ -35,23 +35,10 @@ public abstract class AbstractObstacle extends GameObject {
 	
 	public void update() {
 		x += speed;
-		if (isOffScreen()) {
-			markToRemove();
-		}
 	}//update
 	
-	@Override
-	public boolean isRemoved() {
-		return removed;
-	}//isRemoved
-	
-	@Override
-	protected void markToRemove() {
-		removed = true;
-	}//markToRemove
-	
 	// handle the collision with the player
-	public abstract void collideWithPlayer(AbstractPlayer frog);
+	public abstract void handleCollision(AbstractPlayer frog);
 	
 	
 }

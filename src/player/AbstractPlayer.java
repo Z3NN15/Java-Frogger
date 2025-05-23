@@ -1,63 +1,45 @@
 package player;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import game.GameComponent;
-import game.GameObject;
+import main.GameObject;
 
 public abstract class AbstractPlayer extends GameObject {
-	protected double dx, dy;
+	protected double dx = 0, dy = 0;
 	public boolean isHit = false;
 
-	public AbstractPlayer(GameComponent gc, double scaleFactor, double x, double y, double width, double height) {
-		super(gc, scaleFactor, x, y, width, height);
+	public AbstractPlayer(BufferedImage image, double x, double y) {
+		super(image, x, y);
 	}
 
-	public void update(double dx, double dy) {
+	public void update() {
 		// Update the player's position based on dx and dy
+		System.out.println("Updating frog");
 		x += dx;
 		y += dy;
 
 	}
 	
-	@Override
-	public boolean isRemoved() {
-		//Do nothing
-		return false;
+	public double getX() {
+		return x;
 	}
 	
-	@Override
-	protected void markToRemove() {
-		//Do nothing
+	public double getY() {
+		return y;
 	}
-
+	
+	public void setMoveDelta(double dx, double dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
+	
 	// Abstract method for handling player/fly death
 	public abstract void handleDeath();
-
-	public void playSoundEffect(String filePath) {
-		// Play sound effect when the player dies
-		try {
-			AudioInputStream a = AudioSystem.getAudioInputStream(new File(filePath));
-			Clip clip = AudioSystem.getClip();
-			clip.open(a);
-			clip.start();
-
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.err.println("Caught " + e.getMessage());
-		}
-
+	
+	@Override
+	public Rectangle2D.Double getHitBox() {
+		// Do nothing here
+		return null;
 	}
-
 }

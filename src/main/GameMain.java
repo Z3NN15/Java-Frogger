@@ -1,4 +1,6 @@
-package game;
+package main;
+
+
 
 import javax.swing.JFrame;
 
@@ -8,8 +10,11 @@ public class GameMain {
 	public static final int WINDOW_HEIGHT = 800;
 	public static final int WINDOW_WIDTH = 800;
 	
+	
 	public static void main(String[] args) {
 		new GameMain();
+		Assets.init();
+		
 	}
 	
 	public GameMain() {
