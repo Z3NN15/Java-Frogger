@@ -13,9 +13,9 @@ public abstract class GameObject {
 	/**
 	 * Constructor for the GameObject class
 	 * 
-	 * @param spriteImage Image to be drawn
-	 * @param x horizontal position of the image
-	 * @param y vertical position of the image
+	 * @param image Image used for the object (Frog, Car, Log, etc.)
+	 * @param x initial horizontal position of the image
+	 * @param y initial vertical position of the image
 	 */
 	public GameObject(BufferedImage image, double x, double y) {
 		src = image;

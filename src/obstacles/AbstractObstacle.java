@@ -6,7 +6,11 @@ import main.GameObject;
 import player.AbstractPlayer;
 
 /**
+ * AbstractObstacle is an abstract class that represents an obstacle in the game.
+ * It extends the GameObject class and provides a constructor to initialize the
+ * image, position, and speed of the obstacle.
  * 
+ * @author Ayden Snedigar and Chris Renda
  */
 public abstract class AbstractObstacle extends GameObject {
 	

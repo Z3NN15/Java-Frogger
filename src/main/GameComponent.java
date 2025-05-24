@@ -6,6 +6,14 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import player.Frog;
 
+/**
+ * GameComponent is a custom component that handles the game loop and rendering
+ * of the game objects. It extends JComponent and uses a Timer to update
+ * the game state and repaint the component at a fixed frame rate.
+ * It also manages the level and the frog object.
+ * 
+ * @author Ayden Snedigar and Chris Renda
+ */
 public class GameComponent extends JComponent {
     private static final long serialVersionUID = 1L;
     private static final int FPS = 60;
