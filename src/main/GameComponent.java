@@ -43,10 +43,6 @@ public class GameComponent extends JComponent {
         this.repaint();
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     @Override
     public void addNotify() {
         super.addNotify();

@@ -1,13 +1,9 @@
 package player;
 
+import assets.Sprites;
+import assets.utils.SoundUtil;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import assets.Sprites;
-import assets.Sounds;
-
-imports
-
-assets.
 
 /**
  *
@@ -26,7 +22,12 @@ public class Frog extends AbstractPlayer {
      * @param y The starting y position of the frog
      */
     public Frog(double x, double y) {
-        super(Sprites.FROG, x, y);
+        super(
+                Sprites.FROG,
+                x,
+                y
+        );
+
         this.startX = x;
         this.startY = y;
 
@@ -34,7 +35,13 @@ public class Frog extends AbstractPlayer {
 
     @Override
     public void drawOn(Graphics2D g2d) {
-        g2d.drawImage(Sprites.FROG, (int) this.getX(), (int) this.getY(), null);
+        g2d.drawImage(
+                Sprites.FROG,
+                (int) this.getX(),
+                (int) this.getY(),
+                null
+        );
+
         this.drawHitBox(g2d);
     }
 
@@ -43,22 +50,23 @@ public class Frog extends AbstractPlayer {
         return fly.getX() == x;
     }// handleEat
 
+    @Override
     public void handleDeath() {
-
+        SoundUtil.playSound(assets.Sounds.frogDeathSound);
         this.x = startX;
         this.y = startY;
     }// handleDeath
 
     @Override
     public Rectangle2D.Double getHitBox() {
-        double paddingX = 0.15 * AbstractAssets.FROG.getWidth();
-        double paddingY = 0.1 * AbstractAssets.FROG.getHeight();
+        double paddingX = 0.15 * Sprites.FROG.getWidth();
+        double paddingY = 0.1 * Sprites.FROG.getHeight();
 
         return new Rectangle2D.Double(
                 x + paddingX,
                 y + paddingY,
-                AbstractAssets.FROG.getWidth() - 2 * paddingX,
-                AbstractAssets.FROG.getHeight() - 2 * paddingY
+                Sprites.FROG.getWidth() - 2 * paddingX,
+                Sprites.FROG.getHeight() - 2 * paddingY
         );
     }// getHitBox
 

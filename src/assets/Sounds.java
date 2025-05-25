@@ -1,5 +1,6 @@
 package assets;
 
+import assets.utils.SoundUtil;
 import java.io.IOException;
 import javax.sound.sampled.Clip;
 
@@ -19,8 +20,14 @@ public class Sounds {
      */
     public static void init() {
         // Load sound assets here if needed
-        frogDeathSound = loadClip("/audio/womp-womp.wav");
-        moveSound = loadClip("/audio/frog-croak.wav");
-        gameOverSound = loadClip("/audio/kermit-is-never-gonna-give-you-up.wav");
+        frogDeathSound = SoundUtil.loadClip(
+                "/audio/womp-womp.wav"
+        );
+        moveSound = SoundUtil.loadClip(
+                "/audio/frog-croak.wav"
+        );
+        gameOverSound = SoundUtil.loadClip(
+                "/audio/kermit-is-never-gonna-give-you-up.wav"
+        );
     }
 }

@@ -1,19 +1,29 @@
 package assets;
 
+import assets.utils.ResizeUtil;
+import assets.utils.RotateUtil;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Sprites extends Utils {
+public class Sprites {
 
     // Sprite Assets
-    private static BufferedImage SRC_FROG, SRC_LOG, SRC_CAR;
-    public static BufferedImage FROG, LOG, CAR;
+    private static BufferedImage SRC_FROG;
+    private static BufferedImage SRC_LOG;
+    private static BufferedImage SRC_CAR;
+    private static BufferedImage SRC_FLY;
+
+    public static BufferedImage FROG;
+    public static BufferedImage LOG;
+    public static BufferedImage CAR;
+    public static BufferedImage FLY;
 
     // Scale Factors
     private static double frogScaleFactor = 0.25;
     private static double logScaleFactor = 0.15;
     private static double carScaleFactor = 0.15;
+    private static double flyScaleFactor = 0.15;
 
     /**
      * Initializes the sprite assets by loading them a single time. It scales
@@ -25,48 +35,101 @@ public class Sprites extends Utils {
      */
     public static void init() {
         try {
-            SRC_FROG = ImageIO.read(Sprites.class.getResourceAsStream("/images/frog-2.png"));
-            SRC_LOG = ImageIO.read(Sprites.class.getResourceAsStream("/images/8-bit log.png"));
-            SRC_CAR = ImageIO.read(Sprites.class.getResourceAsStream("/images/8-bit car.png"));
+            SRC_FROG = ImageIO.read(
+                    Sprites.class.getResourceAsStream(
+                            "/images/frog-2.png"
+                    )
+            );
 
-            if (SRC_FROG == null || SRC_LOG == null || SRC_CAR == null) {
-                throw new IOException("One or more image assets could not be loaded. Check file paths.");
+            SRC_LOG = ImageIO.read(
+                    Sprites.class.getResourceAsStream(
+                            "/images/8-bit log.png"
+                    )
+            );
+
+            SRC_CAR = ImageIO.read(
+                    Sprites.class.getResourceAsStream(
+                            "/images/8-bit car.png"
+                    )
+            );
+
+            SRC_FLY = ImageIO.read(
+                    Sprites.class.getResourceAsStream(
+                            "/images/HappyFly.png"
+                    )
+            );
+
+            if (SRC_FROG == null || SRC_LOG == null || SRC_CAR == null || SRC_FLY == null) {
+                throw new IOException(
+                        "One or more sprite assets could not be loaded. Check file paths."
+                );
             }
 
         } catch (IOException | NullPointerException e) {
-            throw new RuntimeException("Error loading images in Assets: ", e);
+            throw new RuntimeException(
+                    "Error loading images in Assets: ",
+                    e
+            );
         }
 
-        FROG = getScaledImage(SRC_FROG, frogScaleFactor);
-        LOG = getScaledImage(SRC_LOG, logScaleFactor);
-        CAR = rotateImage(getScaledImage(SRC_CAR, carScaleFactor), 90);
+        FROG = ResizeUtil.simpleResizer(
+                SRC_FROG,
+                frogScaleFactor
+        );
+
+        LOG = ResizeUtil.simpleResizer(
+                SRC_LOG,
+                logScaleFactor
+        );
+
+        CAR = RotateUtil.rotateImage(
+                ResizeUtil.simpleResizer(
+                        SRC_CAR,
+                        carScaleFactor
+                ),
+                90
+        );
+
+        FLY = ResizeUtil.simpleResizer(
+                SRC_FLY,
+                flyScaleFactor
+        );
 
     }// init()
 
     /**
-     * Set the scale factor for the frog image.
+     * Sets the scale factor for the frog sprite.
      *
-     * @param scaleFactor The scale factor to set
+     * @param scaleFactor the new scale factor to apply to the frog sprite
      */
     public static void setFrogScaleFactor(double scaleFactor) {
-        frogScaleFactor = scaleFactor;
+        Sprites.frogScaleFactor = scaleFactor;
     }// setFrogScaleFactor()
 
     /**
-     * Set the scale factor for the log image.
+     * Sets the scale factor for the log sprite.
      *
-     * @param scaleFactor The scale factor to set
+     * @param scaleFactor the new scale factor to apply to the log sprite
      */
     public static void setLogScaleFactor(double scaleFactor) {
-        logScaleFactor = scaleFactor;
+        Sprites.logScaleFactor = scaleFactor;
     }// setLogScaleFactor()
 
     /**
-     * Set the scale factor for the car image.
+     * Sets the scale factor for the car sprite.
      *
-     * @param scaleFactor The scale factor to set
+     * @param scaleFactor the new scale factor to apply to the fly sprite
      */
     public static void setCarScaleFactor(double scaleFactor) {
-        carScaleFactor = scaleFactor;
+        Sprites.carScaleFactor = scaleFactor;
+    }
+
+    /**
+     * Sets the scale factor for the fly sprite.
+     *
+     * @param scaleFactor the new scale factor to apply to the fly sprite
+     */
+    public static void setFlySclaeFactor(double scaleFactor) {
+        Sprites.flyScaleFactor = scaleFactor;
     }
 }

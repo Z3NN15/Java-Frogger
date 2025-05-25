@@ -7,7 +7,12 @@ import player.AbstractPlayer;
 public class Car extends AbstractObstacle {
 
     public Car(double x, double y, double speed) {
-        super(Sprites.CAR, x, y, speed);
+        super(
+                Sprites.CAR,
+                x,
+                y,
+                speed
+        );
     }
 
     @Override
