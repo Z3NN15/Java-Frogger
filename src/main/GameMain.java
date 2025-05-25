@@ -17,13 +17,15 @@ public class GameMain {
     public static final int WINDOW_HEIGHT = 800;
     public static final int WINDOW_WIDTH = 800;
 
+    private static GameMain main;
+
     public static void main(String[] args) {
         // Initialize assets
         Sprites.init();
         Backgrounds.init();
         Sounds.init();
         // Initialize the game
-        new GameMain();
+        main = new GameMain();
     }
 
     public GameMain() {

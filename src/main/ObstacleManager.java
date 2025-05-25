@@ -41,7 +41,7 @@ public class ObstacleManager {
 
         scheduleNextLog();
         scheduleNextCar();
-    }
+    }//ObstacleManager()
 
     public static void updateAll(Frog frog) {
         tick++;
@@ -73,19 +73,33 @@ public class ObstacleManager {
     /**
      * Draws all obstacles
      */
-    public static void drawAll(Graphics2D g) {
+    protected static void drawAll(Graphics2D g) {
         for (AbstractObstacle o : obstacles) {
             o.drawOn(g);
         }
-    }
+    }//drawAll()
+
+    protected static void clear() {
+        obstacles.clear();
+    }//clear()
+
+    private static void checkCollision(Frog frog) {
+
+        for (AbstractObstacle o : obstacles) {
+            o.handleCollision(frog);
+        }
+    }//checkCollision()
 
     /**
-     * Get the obstacle speed based on the level.
+     * Set the obstacle speed based on the level, given a desired starting speed.
+     * 
+     * @param baseSpeed Objects starting speed
      */
-    private static double getSpeed(double baseSpeed) {
+    private static double setSpeed(double baseSpeed) {
+        int level = LevelManager.getCurrentLevel();
 
-        //TODO: Change the switch once levels are implemented
-        return switch (1) {
+        //DONE: Change the switch once levels are implemented
+        return switch (level) {
             case 1 ->
                 baseSpeed;
             case 2 ->
@@ -93,41 +107,34 @@ public class ObstacleManager {
             case 3 ->
                 rnd.nextBoolean() ? baseSpeed * 1.5 : -baseSpeed * 1.5;
             default ->
-                throw new IllegalArgumentException("Unexpected value: " + 1);
+                throw new IllegalArgumentException("Unexpected level: " + level);
         };
-    }
-
-    private static void checkCollision(Frog frog) {
-
-        for (AbstractObstacle o : obstacles) {
-            o.handleCollision(frog);
-        }
-    }
+    }//setSpeed()
 
     private static void scheduleNextLog() {
         nextLogTick = tick + rnd.nextInt(MIN_LOG_DELAY, MAX_LOG_DELAY);
-    }
+    }//scheduleNextLog()
 
     private static void scheduleNextCar() {
         nextCarTick = tick + rnd.nextInt(MIN_CAR_DELAY, MAX_CAR_DELAY);
-    }
+    }//scheduleNextCar()
 
     private static void spawnLog() {
-        double speed = getSpeed(LOG_SPEED);
+        double speed = setSpeed(LOG_SPEED);
         double y = LOG_LANES[rnd.nextInt(LOG_LANES.length)]; // Randomly select a lane
         double x = (speed > 0) ? -LOG_WIDTH : GameMain.WINDOW_WIDTH;
 
         //Add the log to the list of obstacles
         obstacles.add(new Log(x, y, speed));
-    }
+    }//spawnLog()
 
     private static void spawnCar() {
         double y = CAR_LANES[rnd.nextInt(CAR_LANES.length)]; // Randomly select a lane
-        double speed = getSpeed(CAR_SPEED);
+        double speed = setSpeed(CAR_SPEED);
 
         double x = (speed > 0) ? -CAR_WIDTH : GameMain.WINDOW_WIDTH;
 
         //Add the car to the list of obstacles
         obstacles.add(new Car(x, y, speed));
-    }
+    }//spawnCar()
 }

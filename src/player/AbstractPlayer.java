@@ -2,7 +2,6 @@ package player;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
 import main.GameObject;
 
 public abstract class AbstractPlayer extends GameObject {

@@ -18,7 +18,6 @@ public class GameComponent extends JComponent {
     private static final long serialVersionUID = 1L;
     private static final int FPS = 60;
     private final Timer timer;
-    private final int level = 1;
     private final Frog frog;
     @SuppressWarnings("unused")
 	private final ObstacleManager obstacleManager;

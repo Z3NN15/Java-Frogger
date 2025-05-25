@@ -12,12 +12,10 @@ import java.awt.geom.Rectangle2D;
 public class Frog extends AbstractPlayer {
 
     // Save spawn point for respawn on death
-    private final double startX, startY;
+    private static double startX, startY;
 
     /**
      *
-     * @param gc The game component you want the frog to be drawn on
-     * @param scaleFactor modifier for the size of the image
      * @param x The starting x position of the frog
      * @param y The starting y position of the frog
      */
@@ -28,9 +26,22 @@ public class Frog extends AbstractPlayer {
                 y
         );
 
-        this.startX = x;
-        this.startY = y;
+        Frog.startX = x;
+        Frog.startY = y;
 
+    } 
+
+    public static void setX(double startX) {
+        
+    }
+
+    public boolean handleEat(Fly fly) {
+        // Changed to inherited x instead of local x
+        return fly.getX() == x;
+    }// handleEat
+
+    public static void reset() {
+        
     }
 
     @Override
@@ -44,11 +55,6 @@ public class Frog extends AbstractPlayer {
 
         this.drawHitBox(g2d);
     }
-
-    public boolean handleEat(Fly fly) {
-        // Changed to inherited x instead of local x
-        return fly.getX() == x;
-    }// handleEat
 
     @Override
     public void handleDeath() {
