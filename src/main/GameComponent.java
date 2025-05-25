@@ -35,6 +35,7 @@ public class GameComponent extends JComponent {
         	actionPerformed(e);
         });
         timer.start();
+        
     }
 
     public void actionPerformed(java.awt.event.ActionEvent e) {
