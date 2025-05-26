@@ -64,7 +64,9 @@ public class ResizeUtil {
      * image
      * @return The scaled image
      */
-    public static BufferedImage advancedResizer(BufferedImage image, double xScaleFactor, double yScaleFactor) {
+    public static BufferedImage advancedResizer(BufferedImage image, double[] scaleFactors) {
+        double xScaleFactor = scaleFactors[0];
+        double yScaleFactor = scaleFactors[1];
         if (image == null || yScaleFactor <= 0 || xScaleFactor <= 0) {
             throw new IllegalArgumentException("Image cannot be null and scale factors must be positive.");
         }
@@ -75,6 +77,20 @@ public class ResizeUtil {
         scaledImage.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
 
         return scaledImage;
+    }
+
+    public static double[] getScaleFactor(
+            double originalWidth,
+            double originalHeight,
+            double targetRowHeight
+    ) {
+        double heightScaleFactor = targetRowHeight / originalHeight;
+        double widthScaleFactor = 800 / originalWidth;
+
+        return new double[]{
+            widthScaleFactor,
+            heightScaleFactor
+        };
     }
 
 }

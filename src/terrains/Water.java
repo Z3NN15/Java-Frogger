@@ -2,6 +2,7 @@ package terrains;
 
 import assets.Backgrounds;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import player.Frog;
 
 /**
@@ -19,22 +20,35 @@ import player.Frog;
  */
 public class Water extends AbstractTerrain {
 
+    private final BufferedImage image;
+
     /**
      * Constructs a new Water terrain object at the specified coordinates.
      *
-     * @param image the BufferedImage representing the water terrain's
-     * appearance
-     * @param x the x-coordinate of the water terrain's position
      * @param y the y-coordinate of the water terrain's position
+     * @param height the row height of the terrain
      */
-    public Water(int x, int y) {
+    public Water(
+            BufferedImage image,
+            double y
+    ) {
+
         super(
-                Backgrounds.WATER,
-                x,
+                image,
+                0,
                 y
         );
 
+        this.image = image;
     }//constructor
+
+    public double getWidth() {
+        return image.getWidth();
+    }
+
+    public double getHeight() {
+        return image.getHeight();
+    }
 
     @Override
     public void checkTerrainCollision(Frog frog) {

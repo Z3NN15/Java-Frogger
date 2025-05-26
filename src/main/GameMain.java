@@ -17,6 +17,7 @@ public class GameMain {
     public static final int WINDOW_HEIGHT = 800;
     public static final int WINDOW_WIDTH = 800;
 
+    @SuppressWarnings("unused")
     private static GameMain main;
 
     public static void main(String[] args) {

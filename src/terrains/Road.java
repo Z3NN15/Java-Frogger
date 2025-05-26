@@ -2,6 +2,7 @@ package terrains;
 
 import assets.Backgrounds;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import player.Frog;
 
 /**
@@ -22,12 +23,27 @@ import player.Frog;
  */
 public class Road extends AbstractTerrain {
 
-    public Road(double x, double y) {
+    private BufferedImage image;
+
+    public Road(
+            BufferedImage image,
+            double y
+    ) {
         super(
-                Backgrounds.ROAD,
-                x,
+                image,
+                0,
                 y
         );
+
+        this.image = image;
+    }
+
+    public double getWidth() {
+        return image.getWidth();
+    }
+
+    public double getHeight() {
+        return image.getHeight();
     }
 
     @Override

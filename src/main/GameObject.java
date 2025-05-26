@@ -4,6 +4,20 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+/**
+ * The {@code GameObject} class serves as an abstract base for all objects in the game
+ * that have a position and an associated image. It provides core functionality such as
+ * rendering, hitbox calculation, collision detection, and off-screen checks.
+ * <p>
+ * Subclasses must implement the {@link #getHitBox()} method to define their own collision boundaries.
+ * </p>
+ *
+ * <p>
+ * Typical subclasses include player characters, obstacles, and interactive elements.
+ * </p>
+ *
+ * @author Ayden Snedigar and Chris Renda
+ */
 public abstract class GameObject {
 
     protected double x, y;

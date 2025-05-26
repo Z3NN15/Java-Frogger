@@ -2,26 +2,42 @@ package terrains;
 
 import assets.Backgrounds;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import player.Frog;
 
 /**
  * Represents a grass terrain tile in the game.
  * <p>
- * The {@code Grass} class extends {@link AbstractTerrain} and provides
- * a terrain type that does not interact with the {@link Frog} upon collision.
- * It defines a custom hitbox with padding for collision detection.
+ * The {@code Grass} class extends {@link AbstractTerrain} and provides a
+ * terrain type that does not interact with the {@link Frog} upon collision. It
+ * defines a custom hitbox with padding for collision detection.
  * </p>
  *
  * @author Ayden Snedigar
  */
 public class Grass extends AbstractTerrain {
 
-    public Grass(double x, double y) {
+    private final BufferedImage image;
+
+    public Grass(
+            BufferedImage image,
+            double y
+    ) {
         super(
-                Backgrounds.GRASS,
-                x,
+                image,
+                0,
                 y
         );
+
+        this.image = image;
+    }
+
+    public double getWidth() {
+        return image.getWidth();
+    }
+
+    public double getHeight() {
+        return image.getHeight();
     }
 
     @Override

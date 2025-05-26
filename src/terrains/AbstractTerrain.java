@@ -13,8 +13,11 @@ import player.Frog;
  */
 public abstract class AbstractTerrain extends GameObject {
 
-
-    public AbstractTerrain(BufferedImage image, double x, double y) {
+    public AbstractTerrain(
+            BufferedImage image,
+            double x,
+            double y
+    ) {
         super(
                 image,
                 x,
@@ -23,7 +26,5 @@ public abstract class AbstractTerrain extends GameObject {
     }
 
     public abstract void checkTerrainCollision(Frog frog);
-
-    
 
 }
